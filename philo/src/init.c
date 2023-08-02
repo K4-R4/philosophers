@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 13:53:20 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/02 20:40:07 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/03 08:40:50 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_philo	*malloc_philos(t_share *share, t_config *config)
 	i = 0;
 	while (i < config->nbr_of_philos)
 	{
-		philos[i].id = i + 1;
+		philos[i].id = i;
 		philos[i].share = share;
 		philos[i].config = config;
 		i++;

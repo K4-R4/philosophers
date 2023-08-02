@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:05:36 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/02 20:43:36 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/03 08:41:45 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	print_philo_state(t_philo *philo, t_message_type type)
 
 	pthread_mutex_lock(&philo->share->printable);
 	gettimeofday(&t, NULL);
-	printf("%lld %zu ", t.tv_sec * 1000LL + t.tv_usec / 1000LL, philo->id);
+	printf("%lld %zu ", t.tv_sec * 1000LL + t.tv_usec / 1000LL, philo->id + 1);
 	if (type == TAKEN_FORK)
 		printf("has taken a fork\n");
 	if (type == EATING)
@@ -41,8 +41,8 @@ static void	*philo_life(void *arg)
 	philo = (t_philo *)arg;
 	while (true)
 	{
-		right_fork_id = philo->id;
-		left_fork_id = (philo->id + 1) % philo->config->nbr_of_philos;
+		left_fork_id = philo->id;
+		right_fork_id = (philo->id + 1) % philo->config->nbr_of_philos;
 		printf("left %zu, right %zu\n", left_fork_id, right_fork_id);
 		pthread_mutex_lock(&philo->share->forks[my_min(right_fork_id, left_fork_id)]);
 		print_philo_state(philo, TAKEN_FORK);

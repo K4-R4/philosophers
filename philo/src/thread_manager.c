@@ -6,13 +6,31 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:05:36 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/02 16:36:05 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/02 18:52:45 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	*thread_work(void *arg)
+static void	print_philo_state(t_philo *philo, t_message_type type)
+{
+	struct timeval	t;
+
+	gettimeofday(&t, NULL);
+	printf("%d %zu ", t.tv_usec / 1000, philo->id);
+	if (type == TAKEN_FORK)
+		printf("has taken a fork\n");
+	if (type == EATING)
+		printf("is eating\n");
+	if (type == SLEEPING)
+		printf("is sleeping\n");
+	if (type == THINKING)
+		printf("is thinking\n");
+	if (type == DIED)
+		printf("died\n");
+}
+
+static void	*philo_life(void *arg)
 {
 	t_philo		*philo;
 	size_t		right_fork_id;
@@ -23,14 +41,17 @@ void	*thread_work(void *arg)
 	{
 		right_fork_id = philo->id;
 		left_fork_id = (philo->id + 1) % philo->config->nbr_of_philos;
-		pthread_mutex_lock(&philo->forks->mforks[my_min(right_fork_id, left_fork_id)]);
-		pthread_mutex_lock(&philo->forks->mforks[my_max(right_fork_id, left_fork_id)]);
-		usleep(philo->config->time_to_eat);
-		printf("philo %d is eating\n", philo->id);
-		pthread_mutex_unlock(&philo->forks->mforks[my_min(right_fork_id, left_fork_id)]);
-		pthread_mutex_unlock(&philo->forks->mforks[my_max(right_fork_id, left_fork_id)]);
-		usleep(philo->config->time_to_sleep);
-		printf("philo %d is sleeping\n", philo->id);
+		pthread_mutex_lock(&philo->share->forks[my_min(right_fork_id, left_fork_id)]);
+		print_philo_state(philo, TAKEN_FORK);
+		pthread_mutex_lock(&philo->share->forks[my_max(right_fork_id, left_fork_id)]);
+		print_philo_state(philo, TAKEN_FORK);
+		print_philo_state(philo, EATING);
+		usleep(philo->config->time_to_eat * 1000);
+		pthread_mutex_unlock(&philo->share->forks[my_min(right_fork_id, left_fork_id)]);
+		pthread_mutex_unlock(&philo->share->forks[my_max(right_fork_id, left_fork_id)]);
+		print_philo_state(philo, SLEEPING);
+		usleep(philo->config->time_to_sleep * 1000);
+		print_philo_state(philo, THINKING);
 	}
 	return (NULL);
 }
@@ -42,9 +63,8 @@ bool	create_philo_threads(t_philo *philos, t_config *config)
 	i = 0;
 	while (i < config->nbr_of_philos)
 	{
-		if (pthread_create(&philos[i].thread, NULL, thread_work, &philos[i]) != 0)
+		if (pthread_create(&philos[i].thread, NULL, philo_life, &philos[i]) != 0)
 			return (false);
-		printf("called\n");
 		i++;
 	}
 	return (true);

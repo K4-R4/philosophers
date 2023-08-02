@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 18:26:20 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/02 18:41:15 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/02 20:40:06 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct	s_config
 
 typedef struct	s_share
 {
+	pthread_mutex_t	printable;
 	pthread_mutex_t	*forks;
 }				t_share;
 

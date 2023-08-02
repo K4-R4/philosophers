@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 18:26:02 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/02 18:52:03 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/02 20:42:49 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int		main(int argc, char **argv)
 
 	if (argc != 5 && argc != 6)
 		return (EXIT_FAILURE);
-	printf("called\n");
 	if (!parse_args(&config, argc, argv))
 		return (EXIT_FAILURE);
 	if (!init_share(&share, &config))

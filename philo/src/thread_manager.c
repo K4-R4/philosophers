@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:05:36 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/03 08:41:45 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/04 01:07:48 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ static void	*philo_life(void *arg)
 	{
 		left_fork_id = philo->id;
 		right_fork_id = (philo->id + 1) % philo->config->nbr_of_philos;
-		printf("left %zu, right %zu\n", left_fork_id, right_fork_id);
 		pthread_mutex_lock(&philo->share->forks[my_min(right_fork_id, left_fork_id)]);
 		print_philo_state(philo, TAKEN_FORK);
 		pthread_mutex_lock(&philo->share->forks[my_max(right_fork_id, left_fork_id)]);
@@ -66,6 +65,8 @@ bool	create_philo_threads(t_philo *philos, t_config *config)
 	i = 0;
 	while (i < config->nbr_of_philos)
 	{
+		gettimeofday(&philos[i].birth, NULL);
+		gettimeofday(&philos[i].last_meal, NULL);
 		if (pthread_create(&philos[i].thread, NULL, philo_life, &philos[i]) != 0)
 			return (false);
 		i++;

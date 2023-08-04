@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 18:26:20 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/02 20:40:06 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/04 01:06:38 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,13 @@ typedef struct	s_share
 
 typedef struct	s_philo
 {
-	size_t		id;
-	size_t		nbr_of_meals;
-	pthread_t	thread;
-	t_share		*share;
-	t_config	*config;
+	size_t			id;
+	size_t			nbr_of_meals;
+	pthread_t		thread;
+	t_share			*share;
+	t_config		*config;
+	struct timeval	birth;
+	struct timeval	last_meal;
 }				t_philo;
 
 bool	parse_args(t_config *config, int argc, char **argv);

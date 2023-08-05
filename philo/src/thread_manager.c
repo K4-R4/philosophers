@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:05:36 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/04 01:07:48 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/05 10:20:57 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	print_philo_state(t_philo *philo, t_message_type type)
 
 	pthread_mutex_lock(&philo->share->printable);
 	gettimeofday(&t, NULL);
-	printf("%lld %zu ", t.tv_sec * 1000LL + t.tv_usec / 1000LL, philo->id + 1);
+	printf("%lld %lld ", t.tv_sec * 1000LL + t.tv_usec / 1000LL, philo->id + 1);
 	if (type == TAKEN_FORK)
 		printf("has taken a fork\n");
 	if (type == EATING)
@@ -35,18 +35,19 @@ static void	print_philo_state(t_philo *philo, t_message_type type)
 static void	*philo_life(void *arg)
 {
 	t_philo		*philo;
-	size_t		right_fork_id;
-	size_t		left_fork_id;
+	long long		right_fork_id;
+	long long		left_fork_id;
 
 	philo = (t_philo *)arg;
 	while (true)
 	{
 		left_fork_id = philo->id;
-		right_fork_id = (philo->id + 1) % philo->config->nbr_of_philos;
+		right_fork_id = (philo->id + 1) % philo->config->nbr_philos;
 		pthread_mutex_lock(&philo->share->forks[my_min(right_fork_id, left_fork_id)]);
 		print_philo_state(philo, TAKEN_FORK);
 		pthread_mutex_lock(&philo->share->forks[my_max(right_fork_id, left_fork_id)]);
 		print_philo_state(philo, TAKEN_FORK);
+		gettimeofday(&philo->last_meal, NULL);
 		print_philo_state(philo, EATING);
 		usleep(philo->config->time_to_eat * 1000);
 		pthread_mutex_unlock(&philo->share->forks[my_min(right_fork_id, left_fork_id)]);
@@ -60,12 +61,11 @@ static void	*philo_life(void *arg)
 
 bool	create_philo_threads(t_philo *philos, t_config *config)
 {
-	size_t	i;
+	long long	i;
 
 	i = 0;
-	while (i < config->nbr_of_philos)
+	while (i < config->nbr_philos)
 	{
-		gettimeofday(&philos[i].birth, NULL);
 		gettimeofday(&philos[i].last_meal, NULL);
 		if (pthread_create(&philos[i].thread, NULL, philo_life, &philos[i]) != 0)
 			return (false);
@@ -74,14 +74,41 @@ bool	create_philo_threads(t_philo *philos, t_config *config)
 	return (true);
 }
 
-void	join_philo_threads(t_philo *philos, t_config *config)
+void	detach_philo_threads(t_philo *philos, t_config *config)
 {
-	size_t	i;
+	long long	i;
 
 	i = 0;
-	while (i < config->nbr_of_philos)
+	while (i < config->nbr_philos)
 	{
-		pthread_join(philos[i].thread, NULL);
+		pthread_detach(philos[i].thread);
 		i++;
+	}
+}
+
+void	monitor(t_philo *philos, t_share *share, t_config *config)
+{
+	long long i;
+	struct timeval	t;
+	long long		cur_ms;
+	long long		last_meal_ms;
+
+	while (true)
+	{
+		i = 0;
+		while (i < config->nbr_philos)
+		{
+			gettimeofday(&t, NULL);
+			cur_ms = t.tv_sec * 1000LL + t.tv_usec / 1000LL;
+			last_meal_ms = philos[i].last_meal.tv_sec * 1000LL
+				+ philos->last_meal.tv_usec / 1000LL;
+			if (cur_ms - last_meal_ms >= config->time_to_die)
+			{
+				share->did_die = true;
+				print_philo_state(&philos[i], DIED);
+				return ;
+			}
+			i++;
+		}
 	}
 }

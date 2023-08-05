@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 18:26:20 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/04 01:06:38 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/05 10:21:12 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,38 +33,40 @@ typedef enum	e_message_type
 
 typedef struct	s_config
 {
-	size_t	nbr_of_philos;
-	size_t	time_to_die;
-	size_t	time_to_eat;
-	size_t	time_to_sleep;
-	size_t	nbr_of_meals;
+	long long	nbr_philos;
+	long long	time_to_die;
+	long long	time_to_eat;
+	long long	time_to_sleep;
+	long long	nbr_of_meals;
 }				t_config;
 
 typedef struct	s_share
 {
 	pthread_mutex_t	printable;
 	pthread_mutex_t	*forks;
+	bool			did_die;
+	long long			nbr_satisfied_philos;
 }				t_share;
 
 typedef struct	s_philo
 {
-	size_t			id;
-	size_t			nbr_of_meals;
+	long long			id;
+	long long			nbr_meals;
 	pthread_t		thread;
 	t_share			*share;
 	t_config		*config;
-	struct timeval	birth;
 	struct timeval	last_meal;
 }				t_philo;
 
 bool	parse_args(t_config *config, int argc, char **argv);
 bool	init_share(t_share *share, t_config *config);
-void	free_share(t_share *share, size_t n);
+void	free_share(t_share *share, long long n);
 t_philo	*malloc_philos(t_share *share, t_config *config);
 bool	create_philo_threads(t_philo *philos, t_config *config);;
-void	join_philo_threads(t_philo *philos, t_config *config);
+void	detach_philo_threads(t_philo *philos, t_config *config);
+void	monitor(t_philo *philos, t_share *share, t_config *config);
 int		ft_atoi(const char *str);
-size_t	my_min(size_t a, size_t b);
-size_t	my_max(size_t a, size_t b);
+long long	my_min(long long a, long long b);
+long long	my_max(long long a, long long b);
 
 #endif

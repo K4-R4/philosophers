@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 13:44:56 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/02 16:12:05 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/05 10:08:53 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	ft_atoi(const char *str)
 	return ((int)(nb * sign));
 }
 
-size_t	my_min(size_t a, size_t b)
+long long	my_min(long long a, long long b)
 {
 	if (a < b)
 		return (a);
@@ -63,7 +63,7 @@ size_t	my_min(size_t a, size_t b)
 		return (b);
 }
 
-size_t	my_max(size_t a, size_t b)
+long long	my_max(long long a, long long b)
 {
 	if (a > b)
 		return (a);

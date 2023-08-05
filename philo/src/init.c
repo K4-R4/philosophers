@@ -6,13 +6,13 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 13:53:20 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/03 08:40:50 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/05 10:12:37 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	free_forks(t_share *share, size_t n)
+void	free_forks(t_share *share, long long n)
 {
 	if (share)
 	{
@@ -24,21 +24,21 @@ void	free_forks(t_share *share, size_t n)
 
 bool	init_share(t_share *share, t_config *config)
 {
-	size_t	i;
+	long long	i;
 
 	if (pthread_mutex_init(&share->printable, NULL) != 0)
 		return (false);
-	share->forks = malloc(sizeof (pthread_mutex_t) * config->nbr_of_philos);
+	share->forks = malloc(sizeof (pthread_mutex_t) * config->nbr_philos);
 	if (!share->forks)
 		return (false);
 	i = 0;
-	while (i < config->nbr_of_philos)
+	while (i < config->nbr_philos)
 	{
 		if (pthread_mutex_init(&share->forks[i], NULL) != 0)
 			break ;
 		i++;
 	}
-	if (i < config->nbr_of_philos)
+	if (i < config->nbr_philos)
 	{
 		free_forks(share, i);
 		return (false);
@@ -49,13 +49,13 @@ bool	init_share(t_share *share, t_config *config)
 t_philo	*malloc_philos(t_share *share, t_config *config)
 {
 	t_philo		*philos;
-	size_t		i;
+	long long		i;
 
-	philos = malloc(sizeof (t_philo) * config->nbr_of_philos);
+	philos = malloc(sizeof (t_philo) * config->nbr_philos);
 	if (!philos)
 		return (NULL);
 	i = 0;
-	while (i < config->nbr_of_philos)
+	while (i < config->nbr_philos)
 	{
 		philos[i].id = i;
 		philos[i].share = share;

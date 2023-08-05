@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 18:26:20 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/05 10:21:12 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/05 21:20:01 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,11 @@
 #include <sys/time.h>
 #include <unistd.h>
 
-typedef enum	e_message_type
-{
-	TAKEN_FORK,
-	EATING,
-	SLEEPING,
-	THINKING,
-	DIED
-}				t_message_type;
+#define M_TAKEN_FORK "has taken a fork\n"
+#define M_EATING "is eating\n"
+#define M_SLEEPING "is sleeping\n"
+#define M_THINKING "is thinking\n"
+#define M_DIED "died\n"
 
 typedef struct	s_config
 {
@@ -46,6 +43,7 @@ typedef struct	s_share
 	pthread_mutex_t	*forks;
 	bool			did_die;
 	long long			nbr_satisfied_philos;
+	struct timeval	start;
 }				t_share;
 
 typedef struct	s_philo
@@ -55,6 +53,7 @@ typedef struct	s_philo
 	pthread_t		thread;
 	t_share			*share;
 	t_config		*config;
+	pthread_mutex_t	lock_last_meal;
 	struct timeval	last_meal;
 }				t_philo;
 

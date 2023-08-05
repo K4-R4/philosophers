@@ -7,7 +7,7 @@ SRCS = main.c \
 		utils.c
 OBJS += $(addprefix $(SRC_DIR), $(SRCS:.c=.o))
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=thread
 INCLUDE = -Iinclude
 LDFLAGS =
 
@@ -19,7 +19,7 @@ $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $(OBJS) $(INCLUDE)
 
 debug: $(OBJS)
-	gcc -fsanitize=thread $(CFLAGS) -o $@ $(OBJS) $(INCLUDE)
+	gcc -g -fsanitize=thread $(CFLAGS) -o $@ $(OBJS) $(INCLUDE)
 
 .c.o:
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
@@ -28,6 +28,6 @@ clean:
 	$(RM) $(OBJS) $(BOBJS)
 
 fclean: clean
-	$(RM) $(NAME)
+	$(RM) $(NAME) debug
 
 re: fclean all

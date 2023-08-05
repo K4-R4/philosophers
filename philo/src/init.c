@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 13:53:20 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/05 10:12:37 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/05 21:14:50 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ bool	init_share(t_share *share, t_config *config)
 {
 	long long	i;
 
+	gettimeofday(&share->start, NULL);
 	if (pthread_mutex_init(&share->printable, NULL) != 0)
 		return (false);
 	share->forks = malloc(sizeof (pthread_mutex_t) * config->nbr_philos);
@@ -60,6 +61,11 @@ t_philo	*malloc_philos(t_share *share, t_config *config)
 		philos[i].id = i;
 		philos[i].share = share;
 		philos[i].config = config;
+		if (pthread_mutex_init(&philos[i].lock_last_meal, NULL) != 0)
+		{
+			free(philos);
+			return (NULL);
+		}
 		i++;
 	}
 	return (philos);

@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:05:36 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/05 21:52:19 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/06 18:26:02 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,19 +97,12 @@ void	monitor(t_philo *philos, t_share *share, t_config *config)
 		i = 0;
 		while (i < config->nbr_philos)
 		{
-
 			gettimeofday(&t, NULL);
-			/*
 			cur_ms = timeval_to_ms(&t) - timeval_to_ms(&share->start);
 			pthread_mutex_lock(&philos[i].lock_last_meal);
 			last_meal_ms = timeval_to_ms(&philos[i].last_meal) - timeval_to_ms(&share->start);
-			*/
-			cur_ms = timeval_to_ms(&t);
-			pthread_mutex_lock(&philos[i].lock_last_meal);
-			last_meal_ms = timeval_to_ms(&philos[i].last_meal);
 			if (cur_ms - last_meal_ms >= config->time_to_die)
 			{
-				printf("%llu last : %llu\n", cur_ms, last_meal_ms);
 				share->did_die = true;
 				print_philo_state(&philos[i], M_DIED);
 				return ;

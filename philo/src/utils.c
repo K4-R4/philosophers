@@ -6,11 +6,16 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 13:44:56 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/05 10:08:53 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/07 21:43:32 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+long long	timeval_to_ms(struct timeval *t)
+{
+	return (t->tv_sec * 1000LL + t->tv_usec / 1000LL);
+}
 
 static int	handle_overflow(long *nb, int digit, int sign)
 {

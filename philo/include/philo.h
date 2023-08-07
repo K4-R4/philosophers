@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 18:26:20 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/07 21:43:55 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/07 21:55:07 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ long long	timeval_to_ms(struct timeval *t);
 void	*philo_life(void *arg);
 bool	did_philo_die(t_philo *philo);
 void	print_philo_state(t_philo *philo, char *message);
+void	update_last_meal_time(t_philo *philo);
 long long	my_min(long long a, long long b);
 long long	my_max(long long a, long long b);
 

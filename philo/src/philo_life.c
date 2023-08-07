@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 21:40:21 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/07 22:00:16 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/07 22:39:17 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ static bool	philo_eat(t_philo *philo)
 	print_philo_state(philo, M_TAKEN_FORK);
 	pthread_mutex_lock(&philo->share->forks[my_max(right_fork_id, left_fork_id)]);
 	print_philo_state(philo, M_TAKEN_FORK);
+	update_last_meal_time(philo);
 	if (did_philo_die(philo))
 	{
-		pthread_mutex_unlock(&philo->share->forks[my_min(right_fork_id, left_fork_id)]);
 		pthread_mutex_unlock(&philo->share->forks[my_max(right_fork_id, left_fork_id)]);
+		pthread_mutex_unlock(&philo->share->forks[my_min(right_fork_id, left_fork_id)]);
 		return (false);
 	}
-	update_last_meal_time(philo);
 	usleep(philo->config->time_to_eat * 1000);
-	pthread_mutex_unlock(&philo->share->forks[my_min(right_fork_id, left_fork_id)]);
 	pthread_mutex_unlock(&philo->share->forks[my_max(right_fork_id, left_fork_id)]);
+	pthread_mutex_unlock(&philo->share->forks[my_min(right_fork_id, left_fork_id)]);
 	return (true);
 }
 

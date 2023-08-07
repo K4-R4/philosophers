@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 13:53:20 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/05 21:14:50 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/07 20:28:27 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ bool	init_share(t_share *share, t_config *config)
 	gettimeofday(&share->start, NULL);
 	if (pthread_mutex_init(&share->printable, NULL) != 0)
 		return (false);
+	if (pthread_mutex_init(&share->lock_did_die, NULL) != 0)
+		return (false);
+	share->did_die = false;
 	share->forks = malloc(sizeof (pthread_mutex_t) * config->nbr_philos);
 	if (!share->forks)
 		return (false);

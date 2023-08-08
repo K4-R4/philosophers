@@ -6,12 +6,11 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:05:36 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/07 21:50:55 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/08 21:44:24 by kura             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <stdio.h>
 
 bool	create_philo_threads(t_philo *philos, t_config *config)
 {

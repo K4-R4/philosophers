@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 21:40:21 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/07 22:39:17 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/08 21:16:49 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,11 @@ void	*philo_life(void *arg)
 	philo = (t_philo *)arg;
 	while (true)
 	{
+		if (!philo_think(philo))
+			return (NULL);
 		if (!philo_eat(philo))
 			return (NULL);
 		if (!philo_sleep(philo))
-			return (NULL);
-		if (!philo_think(philo))
 			return (NULL);
 	}
 	return (NULL);

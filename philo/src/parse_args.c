@@ -6,21 +6,61 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 13:32:39 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/05 09:22:55 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/09 21:14:17 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+static bool	is_valid_number(char *s)
+{
+	if (*s == '0')
+		return (false);
+	while (*s)
+	{
+		if (*s < '0' || *s > '9')
+			return (false);
+		s++;
+	}
+	return (true);
+}
+
+static bool	do_overflow(int n, int ones_place)
+{
+	if (n > 0 && ones_place > INT_MAX - n * 10)
+		return (true);
+	return (false);
+}
+
+static bool	ascii_to_positive(long long  *n, char *s)
+{
+	if (!is_valid_number(s))
+		return (false);
+	*n = 0;
+	while (*s)
+	{
+		if (do_overflow(*n, *s - '0'))
+			return (false);
+		*n = *n * 10 + (*s - '0');
+		s++;
+	}
+	return (true);
+}
+
 bool	parse_args(t_config *config, int argc, char **argv)
 {
-	config->nbr_philos = ft_atoi(argv[1]);
-	config->time_to_die = ft_atoi(argv[2]);
-	config->time_to_eat = ft_atoi(argv[3]);
-	config->time_to_sleep = ft_atoi(argv[4]);
+	if (!ascii_to_positive(&config->nbr_philos, argv[1]))
+		return (false);
+	if (!ascii_to_positive(&config->time_to_die, argv[2]))
+		return (false);
+	if (!ascii_to_positive(&config->time_to_eat, argv[3]))
+		return (false);
+	if (!ascii_to_positive(&config->time_to_sleep, argv[4]))
+		return (false);
 	if (argc == 5)
 		config->nbr_of_meals = 0;
 	if (argc == 6)
-		config->nbr_of_meals = ft_atoi(argv[5]);
+		if (!ascii_to_positive(&config->nbr_of_meals, argv[5]))
+			return (false);
 	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 21:40:21 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/08 22:59:25 by kura             ###   ########.fr       */
+/*   Updated: 2023/08/09 21:29:28 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static bool	philo_think(t_philo *philo)
 	if (did_philo_die(philo))
 		return (false);
 	print_philo_state(philo, M_THINKING);
-	usleep(200);
+	usleep(500);
 	return (true);
 }
 

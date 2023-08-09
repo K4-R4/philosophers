@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 21:42:57 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/07 21:55:01 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/09 21:26:30 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,12 @@ void	print_philo_state(t_philo *philo, char *message)
 {
 	struct timeval	t;
 
-	if (did_philo_die(philo))
-		return ;
 	pthread_mutex_lock(&philo->share->printable);
+	if (did_philo_die(philo))
+	{
+		pthread_mutex_unlock(&philo->share->printable);
+		return ;
+	}
 	gettimeofday(&t, NULL);
 	printf("%lld %lld ", timeval_to_ms(&t) - timeval_to_ms(&philo->share->start), philo->id + 1);
 	printf("%s", message);

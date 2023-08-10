@@ -6,11 +6,49 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 21:42:57 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/09 21:26:30 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/10 23:06:15 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static void	pick_up_forks(t_philo *philo, long long right_fork_id, long long left_fork_id)
+{
+	pthread_mutex_lock(&philo->share->forks[my_min(right_fork_id, left_fork_id)]);
+	print_philo_state(philo, M_TAKEN_FORK);
+	pthread_mutex_lock(&philo->share->forks[my_max(right_fork_id, left_fork_id)]);
+	print_philo_state(philo, M_TAKEN_FORK);
+}
+
+static void	drop_forks(t_philo *philo, long long right_fork_id, long long left_fork_id)
+{
+	pthread_mutex_unlock(&philo->share->forks[my_max(right_fork_id, left_fork_id)]);
+	pthread_mutex_unlock(&philo->share->forks[my_min(right_fork_id, left_fork_id)]);
+}
+
+bool	philo_eat(t_philo *philo)
+{
+	long long	right_fork_id;
+	long long	left_fork_id;
+
+	if (did_philo_die(philo))
+		return (false);
+	left_fork_id = philo->id;
+	right_fork_id = (philo->id + 1) % philo->config->nbr_philos;
+	pick_up_forks(philo, right_fork_id, left_fork_id);
+	update_last_meal_time(philo);
+	if (did_philo_die(philo))
+	{
+		drop_forks(philo, right_fork_id, left_fork_id);
+		return (false);
+	}
+	usleep(philo->config->time_to_eat * 1000);
+	drop_forks(philo, right_fork_id, left_fork_id);
+	philo->nbr_meals++;
+	pthread_mutex_lock(&philo->share->lock_nbr_of_satisfied_philos);
+	pthread_mutex_unlock(&philo->share->lock_nbr_of_satisfied_philos);
+	return (true);
+}
 
 bool	did_philo_die(t_philo *philo)
 {

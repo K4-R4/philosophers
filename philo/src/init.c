@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 13:53:20 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/08 21:44:28 by kura             ###   ########.fr       */
+/*   Updated: 2023/08/10 22:46:42 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,25 @@ void	free_forks(t_share *share, long long n)
 	}
 }
 
-bool	init_share(t_share *share, t_config *config)
+static bool	init_share_helper(t_share *share)
 {
-	long long	i;
-
 	gettimeofday(&share->start, NULL);
 	if (pthread_mutex_init(&share->printable, NULL) != 0)
 		return (false);
 	if (pthread_mutex_init(&share->lock_did_die, NULL) != 0)
 		return (false);
+	if (pthread_mutex_init(&share->lock_nbr_of_satisfied_philos, NULL) != 0)
+		return (false);
+	share->nbr_satisfied_philos = 0;
 	share->did_die = false;
+	return (true);
+}
+
+bool	init_share(t_share *share, t_config *config)
+{
+	long long	i;
+
+	init_share_helper(share);
 	share->forks = malloc(sizeof (pthread_mutex_t) * config->nbr_philos);
 	if (!share->forks)
 		return (false);
@@ -64,6 +73,7 @@ t_philo	*malloc_philos(t_share *share, t_config *config)
 		philos[i].id = i;
 		philos[i].share = share;
 		philos[i].config = config;
+		philos[i].nbr_meals = 0;
 		if (pthread_mutex_init(&philos[i].lock_last_meal, NULL) != 0)
 		{
 			free(philos);

@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 18:26:20 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/07 21:55:07 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/10 22:38:39 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct	s_share
 	pthread_mutex_t	printable;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	lock_did_die;
+	pthread_mutex_t	lock_nbr_of_satisfied_philos;
 	bool			did_die;
 	long long		nbr_satisfied_philos;
 	struct timeval	start;
@@ -68,6 +69,7 @@ void	monitor(t_philo *philos, t_share *share, t_config *config);
 int		ft_atoi(const char *str);
 long long	timeval_to_ms(struct timeval *t);
 void	*philo_life(void *arg);
+bool	philo_eat(t_philo *philo);
 bool	did_philo_die(t_philo *philo);
 void	print_philo_state(t_philo *philo, char *message);
 void	update_last_meal_time(t_philo *philo);

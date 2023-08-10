@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:05:36 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/08 21:44:24 by kura             ###   ########.fr       */
+/*   Updated: 2023/08/10 22:47:40 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,18 @@ static bool	monitor_philo_starvation(t_philo *philo, t_share *share, t_config *c
 	return (true);
 }
 
+static bool	monitor_philo_satisfication(t_share *share, t_config *config)
+{
+	pthread_mutex_lock(&share->lock_nbr_of_satisfied_philos);
+	if (share->nbr_satisfied_philos >= config->nbr_philos)
+	{
+		pthread_mutex_unlock(&share->lock_nbr_of_satisfied_philos);
+		return (false);
+	}
+	pthread_mutex_unlock(&share->lock_nbr_of_satisfied_philos);
+	return (true);
+}
+
 void	monitor(t_philo *philos, t_share *share, t_config *config)
 {
 	long long i;
@@ -72,6 +84,8 @@ void	monitor(t_philo *philos, t_share *share, t_config *config)
 		while (i < config->nbr_philos)
 		{
 			if (!monitor_philo_starvation(&philos[i], share, config))
+				return ;
+			if (!monitor_philo_satisfication(share, config))
 				return ;
 			i++;
 		}

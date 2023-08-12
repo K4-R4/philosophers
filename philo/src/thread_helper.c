@@ -6,13 +6,13 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 10:53:02 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/12 11:04:51 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/12 11:49:28 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static bool	monitor_philo_starvation(t_philo *philo,
+static bool	did_any_philo_die(t_philo *philo,
 		t_share *share, t_config *config)
 {
 	struct timeval	t;
@@ -31,22 +31,10 @@ static bool	monitor_philo_starvation(t_philo *philo,
 		share->did_die = true;
 		pthread_mutex_unlock(&share->lock_did_die);
 		pthread_mutex_unlock(&philo->lock_last_meal);
-		return (false);
+		return (true);
 	}
 	pthread_mutex_unlock(&philo->lock_last_meal);
-	return (true);
-}
-
-static bool	monitor_philo_satisfication(t_share *share, t_config *config)
-{
-	pthread_mutex_lock(&share->lock_nbr_satisfied_philos);
-	if (share->nbr_satisfied_philos >= config->nbr_philos)
-	{
-		pthread_mutex_unlock(&share->lock_nbr_satisfied_philos);
-		return (false);
-	}
-	pthread_mutex_unlock(&share->lock_nbr_satisfied_philos);
-	return (true);
+	return (false);
 }
 
 void	monitor(t_philo *philos, t_share *share, t_config *config)
@@ -58,9 +46,9 @@ void	monitor(t_philo *philos, t_share *share, t_config *config)
 		i = 0;
 		while (i < config->nbr_philos)
 		{
-			if (!monitor_philo_starvation(&philos[i], share, config))
+			if (did_any_philo_die(&philos[i], share, config))
 				return ;
-			if (!monitor_philo_satisfication(share, config))
+			if (is_all_philo_satisfied(&philos[i]))
 				return ;
 			i++;
 		}

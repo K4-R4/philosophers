@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 21:40:21 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/12 11:02:29 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/12 11:50:08 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	*philo_life(void *arg)
 	philo = (t_philo *)arg;
 	while (true)
 	{
-		if (did_philo_die(philo))
+		if (did_philo_die(philo) || is_all_philo_satisfied(philo))
 			return (NULL);
 		philo_think(philo);
 		philo_eat(philo);
@@ -52,19 +52,14 @@ bool	did_philo_die(t_philo *philo)
 	return (false);
 }
 
-void	print_philo_state(t_philo *philo, char *message)
+bool	is_all_philo_satisfied(t_philo *philo)
 {
-	struct timeval	t;
-
-	pthread_mutex_lock(&philo->share->lock_print);
-	if (did_philo_die(philo))
+	pthread_mutex_lock(&philo->share->lock_nbr_satisfied_philos);
+	if (philo->share->nbr_satisfied_philos >= philo->config->nbr_philos)
 	{
-		pthread_mutex_unlock(&philo->share->lock_print);
-		return ;
+		pthread_mutex_unlock(&philo->share->lock_nbr_satisfied_philos);
+		return (true);
 	}
-	gettimeofday(&t, NULL);
-	printf("%lld %lld ", timeval_to_ms(&t)
-		- timeval_to_ms(&philo->share->start), philo->id + 1);
-	printf("%s", message);
-	pthread_mutex_unlock(&philo->share->lock_print);
+	pthread_mutex_unlock(&philo->share->lock_nbr_satisfied_philos);
+	return (false);
 }

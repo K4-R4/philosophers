@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 18:26:20 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/12 11:00:18 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/12 11:47:50 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_philo
 	long long		id;
 	long long		nbr_meals;
 	pthread_t		thread;
+	bool			is_satisfied;
 	t_share			*share;
 	t_config		*config;
 	pthread_mutex_t	lock_last_meal;
@@ -66,11 +67,12 @@ t_philo		*malloc_philos(t_share *share, t_config *config);
 bool		create_philo_threads(t_philo *philos, t_config *config);;
 void		join_philo_threads(t_philo *philos, t_config *config);
 void		monitor(t_philo *philos, t_share *share, t_config *config);
-long long	timeval_to_ms(struct timeval *t);
 void		*philo_life(void *arg);
 void		philo_eat(t_philo *philo);
 bool		did_philo_die(t_philo *philo);
+bool		is_all_philo_satisfied(t_philo *philo);
 void		print_philo_state(t_philo *philo, char *message);
+long long	timeval_to_ms(struct timeval *t);
 long long	my_min(long long a, long long b);
 long long	my_max(long long a, long long b);
 void		my_usleep(long long usec);

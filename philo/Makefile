@@ -7,6 +7,7 @@ SRCS = main.c \
 		thread_helper.c \
 		philo.c \
 		philo_helper.c \
+		utils_helper.c \
 		utils.c
 OBJS += $(addprefix $(SRC_DIR), $(SRCS:.c=.o))
 

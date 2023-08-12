@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 13:53:20 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/12 10:38:58 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/12 11:07:05 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ t_philo	*malloc_philos(t_share *share, t_config *config)
 		philos[i].share = share;
 		philos[i].config = config;
 		philos[i].nbr_meals = 0;
+		philos[i].is_satisfied = false;
 		if (pthread_mutex_init(&philos[i].lock_last_meal, NULL) != 0)
 		{
 			free(philos);

@@ -6,11 +6,22 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 18:26:02 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/12 11:58:07 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/12 12:38:06 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+__attribute__((destructor))
+static void destructor() {
+    system("leaks -q philo");
+}
+
+void	free_all(t_philo *philos, t_share *share)
+{
+	free(philos);
+	free(share->forks);
+}
 
 int	main(int argc, char **argv)
 {
@@ -27,11 +38,13 @@ int	main(int argc, char **argv)
 	philos = malloc_philos(&share, &config);
 	if (!philos)
 		return (EXIT_FAILURE);
-	create_philo_threads(philos, &config);
+	if (!create_philo_threads(philos, &config))
+		return (EXIT_FAILURE);
 	monitor(philos, &share, &config);
 	if (config.nbr_philos == 1)
 		detach_philo_threads(philos, &config);
 	else
 		join_philo_threads(philos, &config);
+	free_all(philos, &share);
 	return (EXIT_SUCCESS);
 }

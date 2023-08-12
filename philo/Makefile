@@ -11,7 +11,7 @@ SRCS = main.c \
 		utils.c
 OBJS += $(addprefix $(SRC_DIR), $(SRCS:.c=.o))
 
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror
 INCLUDE = -Iinclude
 LDFLAGS =
 

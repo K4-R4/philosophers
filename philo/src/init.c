@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 13:53:20 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/12 13:22:40 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/12 17:13:28 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,7 @@ void	free_forks(t_share *share, long long n)
 static bool	init_share_helper(t_share *share)
 {
 	gettimeofday(&share->start, NULL);
-	if (pthread_mutex_init(&share->lock_print, NULL) != 0)
-		return (false);
-	if (pthread_mutex_init(&share->lock_did_die, NULL) != 0)
-		return (false);
-	if (pthread_mutex_init(&share->lock_nbr_satisfied_philos, NULL) != 0)
+	if (pthread_mutex_init(&share->lock_share, NULL) != 0)
 		return (false);
 	share->nbr_satisfied_philos = 0;
 	share->did_die = false;
@@ -72,7 +68,7 @@ t_philo	*malloc_philos(t_share *share, t_config *config)
 		philos[i].config = config;
 		philos[i].nbr_meals = 0;
 		philos[i].is_satisfied = false;
-		if (pthread_mutex_init(&philos[i].lock_last_meal, NULL) != 0)
+		if (pthread_mutex_init(&philos[i].lock_philo, NULL) != 0)
 		{
 			free(philos);
 			return (NULL);

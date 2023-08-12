@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 10:53:02 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/12 11:49:28 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/12 17:13:48 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,19 @@ static bool	did_any_philo_die(t_philo *philo,
 
 	gettimeofday(&t, NULL);
 	cur_ms = timeval_to_ms(&t) - timeval_to_ms(&share->start);
-	pthread_mutex_lock(&philo->lock_last_meal);
+	pthread_mutex_lock(&philo->lock_philo);
 	last_meal_ms = timeval_to_ms(&philo->last_meal)
 		- timeval_to_ms(&share->start);
 	if (cur_ms - last_meal_ms >= config->time_to_die)
 	{
 		print_philo_state(philo, M_DIED);
-		pthread_mutex_lock(&share->lock_did_die);
+		pthread_mutex_lock(&share->lock_share);
 		share->did_die = true;
-		pthread_mutex_unlock(&share->lock_did_die);
-		pthread_mutex_unlock(&philo->lock_last_meal);
+		pthread_mutex_unlock(&share->lock_share);
+		pthread_mutex_unlock(&philo->lock_philo);
 		return (true);
 	}
-	pthread_mutex_unlock(&philo->lock_last_meal);
+	pthread_mutex_unlock(&philo->lock_philo);
 	return (false);
 }
 

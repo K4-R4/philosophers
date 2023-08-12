@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 21:40:21 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/12 11:50:08 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/12 17:11:09 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,24 +42,24 @@ void	*philo_life(void *arg)
 
 bool	did_philo_die(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->share->lock_did_die);
+	pthread_mutex_lock(&philo->share->lock_share);
 	if (philo->share->did_die)
 	{
-		pthread_mutex_unlock(&philo->share->lock_did_die);
+		pthread_mutex_unlock(&philo->share->lock_share);
 		return (true);
 	}
-	pthread_mutex_unlock(&philo->share->lock_did_die);
+	pthread_mutex_unlock(&philo->share->lock_share);
 	return (false);
 }
 
 bool	is_all_philo_satisfied(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->share->lock_nbr_satisfied_philos);
+	pthread_mutex_lock(&philo->share->lock_share);
 	if (philo->share->nbr_satisfied_philos >= philo->config->nbr_philos)
 	{
-		pthread_mutex_unlock(&philo->share->lock_nbr_satisfied_philos);
+		pthread_mutex_unlock(&philo->share->lock_share);
 		return (true);
 	}
-	pthread_mutex_unlock(&philo->share->lock_nbr_satisfied_philos);
+	pthread_mutex_unlock(&philo->share->lock_share);
 	return (false);
 }

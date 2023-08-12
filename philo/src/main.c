@@ -6,16 +6,18 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 18:26:02 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/12 13:03:08 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/12 17:15:05 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+/*
 __attribute__((destructor))
 static void destructor() {
     system("leaks -q philo");
 }
+*/
 
 void	free_all(t_philo *philos, t_share *share)
 {

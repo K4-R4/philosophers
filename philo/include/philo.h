@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 18:26:20 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/12 11:57:01 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/12 17:13:20 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,24 +39,22 @@ typedef struct s_config
 
 typedef struct s_share
 {
-	pthread_mutex_t	lock_print;
+	pthread_mutex_t	lock_share;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	lock_did_die;
 	bool			did_die;
-	pthread_mutex_t	lock_nbr_satisfied_philos;
 	long long		nbr_satisfied_philos;
 	struct timeval	start;
 }	t_share;
 
 typedef struct s_philo
 {
+	pthread_mutex_t	lock_philo;
 	long long		id;
 	long long		nbr_meals;
 	pthread_t		thread;
 	bool			is_satisfied;
 	t_share			*share;
 	t_config		*config;
-	pthread_mutex_t	lock_last_meal;
 	struct timeval	last_meal;
 }	t_philo;
 

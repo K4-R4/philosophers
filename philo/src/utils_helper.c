@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 11:44:42 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/12 11:51:40 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/12 17:10:40 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,14 @@ void	print_philo_state(t_philo *philo, char *message)
 {
 	struct timeval	t;
 
-	pthread_mutex_lock(&philo->share->lock_print);
 	if (did_philo_die(philo) || is_all_philo_satisfied(philo))
-	{
-		pthread_mutex_unlock(&philo->share->lock_print);
 		return ;
-	}
+	pthread_mutex_lock(&philo->share->lock_share);
 	gettimeofday(&t, NULL);
 	printf("%lld %lld ", timeval_to_ms(&t)
 		- timeval_to_ms(&philo->share->start), philo->id + 1);
 	printf("%s", message);
-	pthread_mutex_unlock(&philo->share->lock_print);
+	pthread_mutex_unlock(&philo->share->lock_share);
 }
 
 long long	my_min(long long a, long long b)

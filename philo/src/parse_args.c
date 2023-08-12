@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 13:32:39 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/09 21:14:17 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/12 10:39:37 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static bool	do_overflow(int n, int ones_place)
 	return (false);
 }
 
-static bool	ascii_to_positive(long long  *n, char *s)
+static bool	ascii_to_positive(long long *n, char *s)
 {
 	if (!is_valid_number(s))
 		return (false);
@@ -58,9 +58,9 @@ bool	parse_args(t_config *config, int argc, char **argv)
 	if (!ascii_to_positive(&config->time_to_sleep, argv[4]))
 		return (false);
 	if (argc == 5)
-		config->nbr_of_meals = 0;
+		config->nbr_meals = 0;
 	if (argc == 6)
-		if (!ascii_to_positive(&config->nbr_of_meals, argv[5]))
+		if (!ascii_to_positive(&config->nbr_meals, argv[5]))
 			return (false);
 	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 13:53:20 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/10 22:46:42 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/12 10:38:58 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ void	free_forks(t_share *share, long long n)
 static bool	init_share_helper(t_share *share)
 {
 	gettimeofday(&share->start, NULL);
-	if (pthread_mutex_init(&share->printable, NULL) != 0)
+	if (pthread_mutex_init(&share->lock_print, NULL) != 0)
 		return (false);
 	if (pthread_mutex_init(&share->lock_did_die, NULL) != 0)
 		return (false);
-	if (pthread_mutex_init(&share->lock_nbr_of_satisfied_philos, NULL) != 0)
+	if (pthread_mutex_init(&share->lock_nbr_satisfied_philos, NULL) != 0)
 		return (false);
 	share->nbr_satisfied_philos = 0;
 	share->did_die = false;
@@ -62,7 +62,7 @@ bool	init_share(t_share *share, t_config *config)
 t_philo	*malloc_philos(t_share *share, t_config *config)
 {
 	t_philo		*philos;
-	long long		i;
+	long long	i;
 
 	philos = malloc(sizeof (t_philo) * config->nbr_philos);
 	if (!philos)

@@ -6,13 +6,13 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 18:26:02 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/07 20:33:14 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/12 10:39:12 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int		main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_config	config;
 	t_share		share;

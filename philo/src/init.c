@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 13:53:20 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/12 11:07:05 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/12 13:22:40 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,9 @@
 
 void	free_forks(t_share *share, long long n)
 {
-	if (share)
-	{
-		while (n--)
-			pthread_mutex_destroy(&share->forks[n]);
-		free(share->forks);
-	}
+	while (n--)
+		pthread_mutex_destroy(&share->forks[n]);
+	free(share->forks);
 }
 
 static bool	init_share_helper(t_share *share)

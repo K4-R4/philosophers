@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:05:36 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/12 11:03:27 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/12 11:56:46 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,18 @@ bool	create_philo_threads(t_philo *philos, t_config *config)
 		i++;
 	}
 	return (true);
+}
+
+void	detach_philo_threads(t_philo *philos, t_config *config)
+{
+	long long	i;
+
+	i = 0;
+	while (i < config->nbr_philos)
+	{
+		pthread_detach(philos[i].thread);
+		i++;
+	}
 }
 
 void	join_philo_threads(t_philo *philos, t_config *config)

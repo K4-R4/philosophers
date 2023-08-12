@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 18:26:02 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/12 10:39:12 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/12 11:58:07 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	create_philo_threads(philos, &config);
 	monitor(philos, &share, &config);
-	join_philo_threads(philos, &config);
+	if (config.nbr_philos == 1)
+		detach_philo_threads(philos, &config);
+	else
+		join_philo_threads(philos, &config);
 	return (EXIT_SUCCESS);
 }

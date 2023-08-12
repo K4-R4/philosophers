@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 13:32:39 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/12 10:39:37 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/12 12:00:14 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ bool	parse_args(t_config *config, int argc, char **argv)
 	if (!ascii_to_positive(&config->time_to_sleep, argv[4]))
 		return (false);
 	if (argc == 5)
-		config->nbr_meals = 0;
+		config->nbr_meals = -1;
 	if (argc == 6)
 		if (!ascii_to_positive(&config->nbr_meals, argv[5]))
 			return (false);

@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 18:26:20 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/12 11:47:50 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/12 11:57:01 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void		free_share(t_share *share, long long n);
 t_philo		*malloc_philos(t_share *share, t_config *config);
 bool		create_philo_threads(t_philo *philos, t_config *config);;
 void		join_philo_threads(t_philo *philos, t_config *config);
+void		detach_philo_threads(t_philo *philos, t_config *config);
 void		monitor(t_philo *philos, t_share *share, t_config *config);
 void		*philo_life(void *arg);
 void		philo_eat(t_philo *philo);

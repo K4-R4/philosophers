@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 21:42:57 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/12 11:41:40 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/12 12:19:16 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void	philo_eat(t_philo *philo)
 	my_usleep(philo->config->time_to_eat * 1000);
 	drop_forks(philo, r_fork, l_fork);
 	philo->nbr_meals++;
-	if (philo->nbr_meals >= philo->config->nbr_meals)
+	if (philo->config->nbr_meals != -1
+		&& philo->nbr_meals >= philo->config->nbr_meals)
 	{
 		pthread_mutex_lock(&philo->share->lock_nbr_satisfied_philos);
 		if (!philo->is_satisfied)
@@ -54,6 +55,4 @@ void	philo_eat(t_philo *philo)
 		philo->is_satisfied = true;
 		pthread_mutex_unlock(&philo->share->lock_nbr_satisfied_philos);
 	}
-	pthread_mutex_lock(&philo->share->lock_nbr_satisfied_philos);
-	pthread_mutex_unlock(&philo->share->lock_nbr_satisfied_philos);
 }

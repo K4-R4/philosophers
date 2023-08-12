@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 18:26:20 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/10 22:38:39 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/12 09:51:23 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,12 @@ void	monitor(t_philo *philos, t_share *share, t_config *config);
 int		ft_atoi(const char *str);
 long long	timeval_to_ms(struct timeval *t);
 void	*philo_life(void *arg);
-bool	philo_eat(t_philo *philo);
+void	philo_eat(t_philo *philo);
 bool	did_philo_die(t_philo *philo);
 void	print_philo_state(t_philo *philo, char *message);
 void	update_last_meal_time(t_philo *philo);
 long long	my_min(long long a, long long b);
 long long	my_max(long long a, long long b);
+void	my_usleep(long long usec);
 
 #endif

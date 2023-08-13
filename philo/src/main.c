@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 18:26:02 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/12 18:08:25 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/13 19:09:38 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,7 @@ int	main(int argc, char **argv)
 		pthread_mutex_unlock(&share.lock_share);
 	}
 	monitor(philos, &share, &config);
-	if (config.nbr_philos == 1)
-		detach_philo_threads(philos, &config);
-	else
-		join_philo_threads(philos, nbr_created_threads);
+	join_philo_threads(philos, nbr_created_threads);
 	free_all(philos, &share);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 21:42:57 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/12 17:14:00 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/13 19:10:51 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ static void	pick_up_forks(t_philo *philo, long long r_fork, long long l_fork)
 {
 	pthread_mutex_lock(&philo->share->forks[my_min(r_fork, l_fork)]);
 	print_philo_state(philo, M_TAKEN_FORK);
+	if (philo->config->nbr_philos == 1)
+	{
+		my_usleep(philo->config->time_to_die * 2000);
+		return ;
+	}
 	pthread_mutex_lock(&philo->share->forks[my_max(r_fork, l_fork)]);
 	print_philo_state(philo, M_TAKEN_FORK);
 }

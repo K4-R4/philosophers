@@ -4,9 +4,9 @@ SRCS = main.c \
 		parse_args.c \
 		init.c \
 		thread.c \
-		thread_helper.c \
+		thread_sub.c \
 		philo.c \
-		philo_helper.c \
+		philo_sub.c \
 		utils_helper.c \
 		utils.c
 OBJS += $(addprefix $(SRC_DIR), $(SRCS:.c=.o))

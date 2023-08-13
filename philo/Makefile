@@ -7,8 +7,8 @@ SRCS = main.c \
 		thread_sub.c \
 		philo.c \
 		philo_sub.c \
-		utils_helper.c \
-		utils.c
+		utils.c \
+		time.c
 OBJS += $(addprefix $(SRC_DIR), $(SRCS:.c=.o))
 
 CFLAGS = -Wall -Wextra -Werror

@@ -1,37 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_helper.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/02 13:44:56 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/12 11:44:25 by tkuramot         ###   ########.fr       */
+/*   Created: 2023/08/12 11:44:42 by tkuramot          #+#    #+#             */
+/*   Updated: 2023/08/12 17:10:40 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long long	timeval_to_ms(struct timeval *t)
+void	print_philo_state(t_philo *philo, char *message)
 {
-	return (t->tv_sec * 1000LL + t->tv_usec / 1000LL);
+	struct timeval	t;
+
+	if (did_philo_die(philo) || is_all_philo_satisfied(philo))
+		return ;
+	pthread_mutex_lock(&philo->share->lock_share);
+	gettimeofday(&t, NULL);
+	printf("%lld %lld ", timeval_to_ms(&t)
+		- timeval_to_ms(&philo->share->start), philo->id + 1);
+	printf("%s", message);
+	pthread_mutex_unlock(&philo->share->lock_share);
 }
 
-static long long	timeval_to_microsec(struct timeval *t)
+long long	my_min(long long a, long long b)
 {
-	return (t->tv_sec * 1000000LL + t->tv_usec);
+	if (a < b)
+		return (a);
+	else
+		return (b);
 }
 
-void	my_usleep(long long usec)
+long long	my_max(long long a, long long b)
 {
-	struct timeval	t1;
-	struct timeval	t2;
-
-	gettimeofday(&t1, NULL);
-	while (true)
-	{
-		gettimeofday(&t2, NULL);
-		if (timeval_to_microsec(&t2) - timeval_to_microsec(&t1) >= usec)
-			return ;
-	}
+	if (a > b)
+		return (a);
+	else
+		return (b);
 }

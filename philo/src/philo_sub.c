@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_helper.c                                     :+:      :+:    :+:   */
+/*   philo_sub.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 21:42:57 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/13 19:10:51 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/14 21:06:30 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	update_last_meal_time(t_philo *philo)
 	pthread_mutex_unlock(&philo->lock_philo);
 }
 
-static void	pick_up_forks(t_philo *philo, long long r_fork, long long l_fork)
+static void	pick_up_forks(t_philo *philo, int64_t r_fork, int64_t l_fork)
 {
 	pthread_mutex_lock(&philo->share->forks[my_min(r_fork, l_fork)]);
 	print_philo_state(philo, M_TAKEN_FORK);
@@ -33,7 +33,7 @@ static void	pick_up_forks(t_philo *philo, long long r_fork, long long l_fork)
 	print_philo_state(philo, M_TAKEN_FORK);
 }
 
-static void	drop_forks(t_philo *philo, long long r_fork, long long l_fork)
+static void	drop_forks(t_philo *philo, int64_t r_fork, int64_t l_fork)
 {
 	pthread_mutex_unlock(&philo->share->forks[my_max(r_fork, l_fork)]);
 	pthread_mutex_unlock(&philo->share->forks[my_min(r_fork, l_fork)]);
@@ -41,8 +41,8 @@ static void	drop_forks(t_philo *philo, long long r_fork, long long l_fork)
 
 void	philo_eat(t_philo *philo)
 {
-	long long	r_fork;
-	long long	l_fork;
+	int64_t	r_fork;
+	int64_t	l_fork;
 
 	l_fork = philo->id;
 	r_fork = (philo->id + 1) % philo->config->nbr_philos;

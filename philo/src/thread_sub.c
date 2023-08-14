@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   thread_helper.c                                    :+:      :+:    :+:   */
+/*   thread_sub.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 10:53:02 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/12 17:13:48 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/14 21:05:08 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ static bool	did_any_philo_die(t_philo *philo,
 		t_share *share, t_config *config)
 {
 	struct timeval	t;
-	long long		cur_ms;
-	long long		last_meal_ms;
+	int64_t		cur_ms;
+	int64_t		last_meal_ms;
 
 	gettimeofday(&t, NULL);
 	cur_ms = timeval_to_ms(&t) - timeval_to_ms(&share->start);
@@ -39,7 +39,7 @@ static bool	did_any_philo_die(t_philo *philo,
 
 void	monitor(t_philo *philos, t_share *share, t_config *config)
 {
-	long long	i;
+	int64_t	i;
 
 	while (true)
 	{

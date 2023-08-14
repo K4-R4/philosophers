@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 13:44:56 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/12 11:44:25 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/14 21:05:20 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long long	timeval_to_ms(struct timeval *t)
+int64_t	timeval_to_ms(struct timeval *t)
 {
 	return (t->tv_sec * 1000LL + t->tv_usec / 1000LL);
 }
 
-static long long	timeval_to_microsec(struct timeval *t)
+static int64_t	timeval_to_microsec(struct timeval *t)
 {
 	return (t->tv_sec * 1000000LL + t->tv_usec);
 }
 
-void	my_usleep(long long usec)
+void	my_usleep(int64_t usec)
 {
 	struct timeval	t1;
 	struct timeval	t2;

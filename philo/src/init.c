@@ -6,13 +6,13 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 13:53:20 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/12 18:02:32 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/14 21:06:13 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	free_forks(t_share *share, long long n)
+void	free_forks(t_share *share, int64_t n)
 {
 	while (n--)
 		pthread_mutex_destroy(&share->forks[n]);
@@ -31,7 +31,7 @@ static bool	init_share_helper(t_share *share)
 
 bool	init_share(t_share *share, t_config *config)
 {
-	long long	i;
+	int64_t	i;
 
 	init_share_helper(share);
 	share->forks = malloc(sizeof (pthread_mutex_t) * config->nbr_philos);
@@ -55,7 +55,7 @@ bool	init_share(t_share *share, t_config *config)
 t_philo	*malloc_philos(t_share *share, t_config *config)
 {
 	t_philo		*philos;
-	long long	i;
+	int64_t	i;
 
 	philos = malloc(sizeof (t_philo) * config->nbr_philos);
 	if (!philos)

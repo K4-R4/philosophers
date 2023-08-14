@@ -6,15 +6,15 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:05:36 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/12 17:35:50 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/14 21:06:48 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long long	create_philo_threads(t_philo *philos, t_config *config)
+int64_t	create_philo_threads(t_philo *philos, t_config *config)
 {
-	long long	i;
+	int64_t	i;
 
 	i = 0;
 	while (i < config->nbr_philos)
@@ -30,7 +30,7 @@ long long	create_philo_threads(t_philo *philos, t_config *config)
 
 void	detach_philo_threads(t_philo *philos, t_config *config)
 {
-	long long	i;
+	int64_t	i;
 
 	i = 0;
 	while (i < config->nbr_philos)
@@ -40,9 +40,9 @@ void	detach_philo_threads(t_philo *philos, t_config *config)
 	}
 }
 
-void	join_philo_threads(t_philo *philos, long long nbr_created_threads)
+void	join_philo_threads(t_philo *philos, int64_t nbr_created_threads)
 {
-	long long	i;
+	int64_t	i;
 
 	i = 0;
 	while (i < nbr_created_threads)

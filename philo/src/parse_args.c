@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 13:32:39 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/12 12:00:14 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/14 21:07:01 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static bool	do_overflow(int n, int ones_place)
 	return (false);
 }
 
-static bool	ascii_to_positive(long long *n, char *s)
+static bool	ascii_to_positive(int64_t *n, char *s)
 {
 	if (!is_valid_number(s))
 		return (false);

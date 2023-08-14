@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_helper.c                                     :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 11:44:42 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/12 17:10:40 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/14 21:05:48 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	print_philo_state(t_philo *philo, char *message)
 	pthread_mutex_unlock(&philo->share->lock_share);
 }
 
-long long	my_min(long long a, long long b)
+int64_t	my_min(int64_t a, int64_t b)
 {
 	if (a < b)
 		return (a);
@@ -34,7 +34,7 @@ long long	my_min(long long a, long long b)
 		return (b);
 }
 
-long long	my_max(long long a, long long b)
+int64_t	my_max(int64_t a, int64_t b)
 {
 	if (a > b)
 		return (a);

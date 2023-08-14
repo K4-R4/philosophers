@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 18:26:20 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/12 17:40:02 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/14 21:04:22 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@
 
 typedef struct s_config
 {
-	long long	nbr_philos;
-	long long	time_to_die;
-	long long	time_to_eat;
-	long long	time_to_sleep;
-	long long	nbr_meals;
+	int64_t	nbr_philos;
+	int64_t	time_to_die;
+	int64_t	time_to_eat;
+	int64_t	time_to_sleep;
+	int64_t	nbr_meals;
 }	t_config;
 
 typedef struct s_share
@@ -42,15 +42,15 @@ typedef struct s_share
 	pthread_mutex_t	lock_share;
 	pthread_mutex_t	*forks;
 	bool			did_die;
-	long long		nbr_satisfied_philos;
+	int64_t		nbr_satisfied_philos;
 	struct timeval	start;
 }	t_share;
 
 typedef struct s_philo
 {
 	pthread_mutex_t	lock_philo;
-	long long		id;
-	long long		nbr_meals;
+	int64_t		id;
+	int64_t		nbr_meals;
 	pthread_t		thread;
 	bool			is_satisfied;
 	t_share			*share;
@@ -60,11 +60,11 @@ typedef struct s_philo
 
 bool		parse_args(t_config *config, int argc, char **argv);
 bool		init_share(t_share *share, t_config *config);
-void		free_forks(t_share *share, long long n);
-void		free_share(t_share *share, long long n);
+void		free_forks(t_share *share, int64_t n);
+void		free_share(t_share *share, int64_t n);
 t_philo		*malloc_philos(t_share *share, t_config *config);
-long long	create_philo_threads(t_philo *philos, t_config *config);
-void		join_philo_threads(t_philo *philos, long long nbr_created_threads);
+int64_t	create_philo_threads(t_philo *philos, t_config *config);
+void		join_philo_threads(t_philo *philos, int64_t nbr_created_threads);
 void		detach_philo_threads(t_philo *philos, t_config *config);
 void		monitor(t_philo *philos, t_share *share, t_config *config);
 void		*philo_life(void *arg);
@@ -72,9 +72,9 @@ void		philo_eat(t_philo *philo);
 bool		did_philo_die(t_philo *philo);
 bool		is_all_philo_satisfied(t_philo *philo);
 void		print_philo_state(t_philo *philo, char *message);
-long long	timeval_to_ms(struct timeval *t);
-long long	my_min(long long a, long long b);
-long long	my_max(long long a, long long b);
-void		my_usleep(long long usec);
+int64_t	timeval_to_ms(struct timeval *t);
+int64_t	my_min(int64_t a, int64_t b);
+int64_t	my_max(int64_t a, int64_t b);
+void		my_usleep(int64_t usec);
 
 #endif

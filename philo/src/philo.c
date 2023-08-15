@@ -6,29 +6,18 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 21:40:21 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/12 17:11:09 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/15 22:21:30 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-static void	philo_sleep(t_philo *philo)
-{
-	print_philo_state(philo, M_SLEEPING);
-	my_usleep(philo->config->time_to_sleep * 1000);
-}
-
-static void	philo_think(t_philo *philo)
-{
-	print_philo_state(philo, M_THINKING);
-	my_usleep(500);
-}
 
 void	*philo_life(void *arg)
 {
 	t_philo		*philo;
 
 	philo = (t_philo *)arg;
+	sleep_until(&philo->share->start);
 	while (true)
 	{
 		if (did_philo_die(philo) || is_all_philo_satisfied(philo))
@@ -62,4 +51,12 @@ bool	is_all_philo_satisfied(t_philo *philo)
 	}
 	pthread_mutex_unlock(&philo->share->lock_share);
 	return (false);
+}
+
+void	update_last_meal_time(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->lock_philo);
+	gettimeofday(&philo->last_meal, NULL);
+	print_philo_state(philo, M_EATING);
+	pthread_mutex_unlock(&philo->lock_philo);
 }

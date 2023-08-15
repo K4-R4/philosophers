@@ -6,38 +6,29 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:05:36 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/14 21:06:48 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/15 22:35:34 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int64_t	create_philo_threads(t_philo *philos, t_config *config)
+// Set starting time of the simulation
+int64_t	create_philo_threads(t_philo *philos, t_share *share, t_config *config)
 {
 	int64_t	i;
 
 	i = 0;
+	gettimeofday(&share->start, NULL);
+	share->start.tv_sec++;
 	while (i < config->nbr_philos)
 	{
-		gettimeofday(&philos[i].last_meal, NULL);
+		philos[i].last_meal = share->start;
 		if (pthread_create(&philos[i].thread, NULL,
 				philo_life, &philos[i]) != 0)
 			return (i);
 		i++;
 	}
 	return (i);
-}
-
-void	detach_philo_threads(t_philo *philos, t_config *config)
-{
-	int64_t	i;
-
-	i = 0;
-	while (i < config->nbr_philos)
-	{
-		pthread_detach(philos[i].thread);
-		i++;
-	}
 }
 
 void	join_philo_threads(t_philo *philos, int64_t nbr_created_threads)

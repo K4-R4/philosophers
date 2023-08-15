@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 13:53:20 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/14 21:06:13 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/15 22:12:28 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	free_forks(t_share *share, int64_t n)
 
 static bool	init_share_helper(t_share *share)
 {
-	gettimeofday(&share->start, NULL);
 	if (pthread_mutex_init(&share->lock_share, NULL) != 0)
 		return (false);
 	share->nbr_satisfied_philos = 0;

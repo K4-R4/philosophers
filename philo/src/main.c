@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 18:26:02 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/14 21:05:35 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/15 22:18:42 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(int argc, char **argv)
 	philos = malloc_philos(&share, &config);
 	if (!philos)
 		return (EXIT_FAILURE);
-	nbr_created_threads = create_philo_threads(philos, &config);
+	nbr_created_threads = create_philo_threads(philos, &share, &config);
 	if (nbr_created_threads != config.nbr_philos)
 	{
 		pthread_mutex_lock(&share.lock_share);

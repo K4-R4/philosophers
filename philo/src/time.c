@@ -6,20 +6,20 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 13:44:56 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/15 22:10:17 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/15 22:20:20 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int64_t	timeval_to_ms(struct timeval *t)
-{
-	return (t->tv_sec * 1000LL + t->tv_usec / 1000LL);
-}
-
 static int64_t	timeval_to_microsec(struct timeval *t)
 {
 	return (t->tv_sec * 1000000LL + t->tv_usec);
+}
+
+int64_t	timeval_to_ms(struct timeval *t)
+{
+	return (t->tv_sec * 1000LL + t->tv_usec / 1000LL);
 }
 
 void	sleep_until(struct timeval *t1)

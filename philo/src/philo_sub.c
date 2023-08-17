@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 21:42:57 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/15 22:31:09 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/17 12:55:23 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,4 @@ void	philo_sleep(t_philo *philo)
 void	philo_think(t_philo *philo)
 {
 	print_philo_state(philo, M_THINKING);
-	my_usleep(500);
 }

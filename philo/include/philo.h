@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 18:26:20 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/15 22:20:56 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/19 10:02:23 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_philo
 	t_share			*share;
 	t_config		*config;
 	struct timeval	last_meal;
+	struct timeval	next_meal;
 }	t_philo;
 
 bool		parse_args(t_config *config, int argc, char **argv);
@@ -74,9 +75,10 @@ bool		did_philo_die(t_philo *philo);
 bool		is_all_philo_satisfied(t_philo *philo);
 void		print_philo_state(t_philo *philo, char *message);
 int64_t		timeval_to_ms(struct timeval *t);
+int64_t		timeval_to_microsec(struct timeval *t);
 void		sleep_until(struct timeval *t1);
+void		my_usleep(int64_t usec);
 int64_t		my_min(int64_t a, int64_t b);
 int64_t		my_max(int64_t a, int64_t b);
-void		my_usleep(int64_t usec);
 
 #endif

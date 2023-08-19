@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 18:26:02 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/15 22:18:42 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/19 10:12:16 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int argc, char **argv)
 	t_config	config;
 	t_share		share;
 	t_philo		*philos;
-	int64_t	nbr_created_threads;
+	int64_t		nbr_created_threads;
 
 	if ((argc != 5 && argc != 6) || !parse_args(&config, argc, argv)
 		|| !init_share(&share, &config))

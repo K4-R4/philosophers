@@ -22,9 +22,6 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $(OBJS) $(INCLUDE)
 
-debug: $(OBJS)
-	gcc -g -fsanitize=thread $(CFLAGS) -o $@ $(OBJS) $(INCLUDE)
-
 .c.o:
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
@@ -32,6 +29,6 @@ clean:
 	$(RM) $(OBJS) $(BOBJS)
 
 fclean: clean
-	$(RM) $(NAME) debug
+	$(RM) $(NAME)
 
 re: fclean all

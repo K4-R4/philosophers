@@ -6,13 +6,13 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 13:44:56 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/17 12:53:47 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/19 09:25:37 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static int64_t	timeval_to_microsec(struct timeval *t)
+int64_t	timeval_to_microsec(struct timeval *t)
 {
 	return (t->tv_sec * 1000000LL + t->tv_usec);
 }

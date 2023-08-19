@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 13:53:20 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/15 22:12:28 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/19 10:12:02 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ bool	init_share(t_share *share, t_config *config)
 
 t_philo	*malloc_philos(t_share *share, t_config *config)
 {
-	t_philo		*philos;
+	t_philo	*philos;
 	int64_t	i;
 
 	philos = malloc(sizeof (t_philo) * config->nbr_philos);

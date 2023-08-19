@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 10:53:02 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/15 22:36:21 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/19 10:14:21 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ static bool	did_any_philo_die(t_philo *philo,
 		t_share *share, t_config *config)
 {
 	struct timeval	t;
-	int64_t		cur_ms;
-	int64_t		last_meal_ms;
+	int64_t			cur_ms;
+	int64_t			last_meal_ms;
 
 	sleep_until(&share->start);
 	gettimeofday(&t, NULL);

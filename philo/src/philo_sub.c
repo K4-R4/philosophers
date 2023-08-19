@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 21:42:57 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/19 10:14:03 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/19 12:17:57 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,23 +62,10 @@ void	philo_sleep(t_philo *philo)
 
 void	philo_think(t_philo *philo)
 {
-	struct timeval	t;
-	int64_t			time_to_wait;
-	int64_t			interval;
-
-	gettimeofday(&t, NULL);
 	print_philo_state(philo, M_THINKING);
-	time_to_wait = timeval_to_microsec(&philo->next_meal)
-		- timeval_to_microsec(&t);
-	interval = (philo->config->time_to_die - (philo->config->time_to_eat
-				+ philo->config->time_to_sleep + 50)) * 1000;
-	philo->next_meal = t;
-	philo->next_meal.tv_usec += interval;
-	if (time_to_wait < 0)
-		return ;
-	else
+	if (philo->nbr_meals == 0)
 	{
-		t.tv_usec += time_to_wait;
-		sleep_until(&t);
+		sleep_until(&philo->next_meal);
+		return ;
 	}
 }

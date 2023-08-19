@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 18:26:20 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/19 13:12:34 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/19 13:20:08 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,15 @@ typedef struct s_share
 	pthread_mutex_t	lock_share;
 	pthread_mutex_t	*forks;
 	bool			did_die;
-	int64_t		nbr_satisfied_philos;
+	int64_t			nbr_satisfied_philos;
 	struct timeval	start;
 }	t_share;
 
 typedef struct s_philo
 {
 	pthread_mutex_t	lock_philo;
-	int64_t		id;
-	int64_t		nbr_meals;
+	int64_t			id;
+	int64_t			nbr_meals;
 	pthread_t		thread;
 	bool			is_satisfied;
 	t_share			*share;
@@ -63,7 +63,8 @@ bool		parse_args(t_config *config, int argc, char **argv);
 bool		init_share(t_share *share, t_config *config);
 void		free_forks(t_share *share, int64_t n);
 t_philo		*malloc_philos(t_share *share, t_config *config);
-int64_t		create_philo_threads(t_philo *philos, t_share *share, t_config *config);
+int64_t		create_philo_threads(t_philo *philos,
+				t_share *share, t_config *config);
 void		join_philo_threads(t_philo *philos, int64_t nbr_created_threads);
 void		monitor(t_philo *philos, t_share *share, t_config *config);
 void		*philo_life(void *arg);

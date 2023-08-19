@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 14:05:36 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/08/19 11:10:46 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/08/19 12:38:02 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ static int64_t	create_even_threads(t_philo *philos,
 	return (i);
 }
 
-// Set starting time of the simulation
 int64_t	create_philo_threads(t_philo *philos, t_share *share, t_config *config)
 {
 	int64_t	i;
